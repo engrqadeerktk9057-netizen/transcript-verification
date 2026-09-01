@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Academic Transcript Verification</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="logo">UET</div>
+
+        <div>
+            <h1>UET Peshawar</h1>
+            <p>Academic Transcript Verification</p>
+        </div>
+    </header>
+
+
+    <section class="search-section">
+
+        <h2>Verify Academic Record</h2>
+
+        <p>Enter Registration Number</p>
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="registrationInput"
+                placeholder="22JZCIV0571"
+            >
+
+            <button id="verifyButton">
+                Verify
+            </button>
+
+        </div>
+
+        <div id="message"></div>
+
+    </section>
+
+
+    <section id="result" class="result hidden">
+
+        <div class="verified">
+            <div class="check">✓</div>
+
+            <h2>Verified Academic Record</h2>
+
+            <p>Record successfully verified.</p>
+        </div>
+
+
+        <div class="student-info">
+
+            <div class="info-row">
+                <span>Name</span>
+                <strong>Abdul Qadeer</strong>
+            </div>
+
+            <div class="info-row">
+                <span>University</span>
+                <strong>UET Peshawar</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Department</span>
+                <strong>Civil Engineering</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Registration No.</span>
+                <strong>22JZCIV0571</strong>
+            </div>
+
+            <div class="info-row">
+                <span>CGPA</span>
+                <strong>3.20</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Status</span>
+                <strong class="graduated">Graduated</strong>
+            </div>
+
+        </div>
+
+
+        <div class="qr-section">
+
+            <h3>Verification QR Code</h3>
+
+            <p>Scan this QR code to verify this record.</p>
+
+            <div id="qrcode"></div>
+
+            <button id="downloadButton" class="download-btn">
+                Download QR Code
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <p>Academic Transcript Verification</p>
+
+        <small>
+            Personal academic verification page.
+        </small>
+
+    </footer>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
