@@ -1,16 +1,1025 @@
-<!-- QR CODE -->
-<div class="qr-area">
+<!DOCTYPE html>
+<html lang="en">
 
-    <h3>Scan to Verify</h3>
+<head>
+<meta charset="UTF-8">
 
-    <p>
-        Scan this QR code to open the online verification page.
-    </p>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <div id="qrcode"></div>
+<title>Academic Record Verification</title>
 
-    <button onclick="downloadQR()">
-        Download QR Code
-    </button>
+<!-- QR CODE LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+}
+
+
+/* =====================================================
+   MAIN PAGE
+===================================================== */
+
+.page {
+    width: 100%;
+    max-width: 650px;
+    min-height: 1100px;
+
+    margin: 0 auto;
+
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 0% 40%,
+            rgba(50, 160, 190, 0.10),
+            transparent 42%
+        ),
+        radial-gradient(
+            ellipse at 100% 65%,
+            rgba(50, 160, 190, 0.08),
+            transparent 42%
+        ),
+        repeating-linear-gradient(
+            125deg,
+            rgba(80, 150, 170, 0.025) 0px,
+            rgba(80, 150, 170, 0.025) 1px,
+            transparent 1px,
+            transparent 8px
+        ),
+        #ffffff;
+}
+
+
+/* =====================================================
+   DECORATIVE BORDER
+===================================================== */
+
+.top-border,
+.bottom-border {
+    position: relative;
+    height: 52px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 8px,
+            #65b5cb 9px,
+            #65b5cb 11px,
+            transparent 12px,
+            transparent 21px
+        );
+}
+
+.top-border {
+    border-top: 8px solid #8dcfe1;
+    border-bottom: 3px solid #4da9c3;
+}
+
+.bottom-border {
+    border-top: 3px solid #4da9c3;
+    border-bottom: 8px solid #8dcfe1;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+    text-align: center;
+
+    padding-top: 28px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.header h1,
+.header h2,
+.header h3 {
+    margin: 0;
+
+    font-weight: 400;
+
+    color: #222;
+}
+
+.header h1 {
+    font-size: 29px;
+    line-height: 1.25;
+}
+
+.header h2 {
+    font-size: 29px;
+    line-height: 1.25;
+}
+
+.header h3 {
+    font-size: 29px;
+    line-height: 1.25;
+
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   NON-OFFICIAL LABEL
+===================================================== */
+
+.unofficial {
+    display: inline-block;
+
+    margin-top: 4px;
+    margin-bottom: 15px;
+
+    padding: 5px 12px;
+
+    border: 1px solid #d5a600;
+    border-radius: 4px;
+
+    background: #fff9df;
+
+    color: #806700;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* =====================================================
+   SIMPLE ACADEMIC EMBLEM
+===================================================== */
+
+.logo {
+    width: 82px;
+    height: 82px;
+
+    margin: 0 auto;
+
+    border-radius: 50%;
+
+    border: 5px solid #888;
+
+    background: #f8f8f8;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow:
+        inset 0 0 0 4px #e2ad4e,
+        0 2px 5px rgba(0,0,0,0.12);
+
+    color: #397d96;
+
+    text-align: center;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    line-height: 1.2;
+}
+
+.logo span {
+    display: block;
+}
+
+
+/* =====================================================
+   PAGE TITLE
+===================================================== */
+
+.page-title {
+    text-align: center;
+
+    margin-top: 12px;
+    margin-bottom: 55px;
+
+    font-size: 21px;
+
+    color: #222;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+    width: 72%;
+
+    margin: 0 auto;
+}
+
+
+/* =====================================================
+   VERIFICATION TITLE
+===================================================== */
+
+.details-heading {
+    font-size: 20px;
+
+    font-weight: 500;
+
+    margin-bottom: 10px;
+}
+
+.heading-line {
+    width: 100%;
+    height: 1px;
+
+    background: #ddd;
+
+    margin-bottom: 2px;
+}
+
+
+/* =====================================================
+   DETAILS TABLE
+===================================================== */
+
+.details-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-bottom: 25px;
+}
+
+.details-table tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.details-table td {
+    padding: 12px 9px;
+
+    font-size: 14px;
+
+    vertical-align: middle;
+}
+
+.details-table td:first-child {
+    width: 45%;
+
+    color: #333;
+}
+
+.details-table td:last-child {
+    color: #555;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status {
+    color: #198754 !important;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   QR SECTION
+===================================================== */
+
+.qr-section {
+    text-align: center;
+
+    margin-top: 20px;
+}
+
+.qr-section h3 {
+    margin: 0 0 7px;
+
+    font-size: 17px;
+
+    font-weight: 500;
+}
+
+.qr-section p {
+    margin: 0 0 12px;
+
+    font-size: 12px;
+
+    color: #777;
+}
+
+.qr-box {
+    width: 180px;
+    height: 180px;
+
+    margin: 0 auto;
+
+    padding: 8px;
+
+    background: white;
+
+    border: 2px solid #9bcddd;
+
+    border-radius: 7px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+#qrcode {
+    width: 160px;
+    height: 160px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =====================================================
+   QR URL TEXT
+===================================================== */
+
+.qr-url {
+    max-width: 300px;
+
+    margin: 10px auto 0;
+
+    font-size: 9px;
+
+    color: #888;
+
+    word-break: break-all;
+}
+
+
+/* =====================================================
+   VERIFICATION MESSAGE
+===================================================== */
+
+.verification-message {
+    text-align: center;
+
+    margin: 18px 0;
+
+    padding: 10px;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+}
+
+.verified {
+    background: #edf8f1;
+
+    border: 1px solid #b9dec5;
+
+    color: #198754;
+}
+
+
+/* =====================================================
+   OFFICE INFORMATION
+===================================================== */
+
+.office {
+    margin-top: 27px;
+
+    text-align: right;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: #555;
+}
+
+.office strong {
+    color: #333;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+.date {
+    text-align: center;
+
+    margin-top: 30px;
+
+    font-size: 10px;
+
+    color: #555;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+    text-align: center;
+
+    padding: 20px;
+
+    font-size: 10px;
+
+    color: #777;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .page {
+        min-height: 100vh;
+    }
+
+    .header h1,
+    .header h2,
+    .header h3 {
+        font-size: 27px;
+    }
+
+    .page-title {
+        font-size: 20px;
+
+        margin-bottom: 48px;
+    }
+
+    .content {
+        width: 76%;
+    }
+
+    .details-table td {
+        font-size: 13px;
+
+        padding: 11px 6px;
+    }
+
+    .details-table td:first-child {
+        width: 45%;
+    }
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .page {
+        max-width: none;
+    }
+
+    .qr-url {
+        display: none;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- =================================================
+         TOP BORDER
+    ================================================== -->
+
+    <div class="top-border"></div>
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <div class="header">
+
+        <h1>
+            University of Engineering &amp;
+        </h1>
+
+        <h2>
+            Technology,
+        </h2>
+
+        <h3>
+            Peshawar Pakistan
+        </h3>
+
+
+        <!-- PERSONAL / UNOFFICIAL LABEL -->
+
+        <div class="unofficial">
+            PERSONAL / UNOFFICIAL ACADEMIC RECORD
+        </div>
+
+
+        <!-- SIMPLE EMBLEM -->
+
+        <div class="logo">
+
+            <span>
+                ACADEMIC<br>
+                RECORD
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         TITLE
+    ================================================== -->
+
+    <div class="page-title">
+
+        Academic Record Verification
+
+    </div>
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================== -->
+
+    <div class="content">
+
+
+        <!-- VERIFICATION DETAILS -->
+
+        <div class="details-heading">
+
+            Verification Details:
+
+        </div>
+
+        <div class="heading-line"></div>
+
+
+        <!-- STUDENT INFORMATION -->
+
+        <table class="details-table">
+
+
+            <tr>
+
+                <td>
+                    Registration No.
+                </td>
+
+                <td>
+                    22JZCIV0571
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Student Name
+                </td>
+
+                <td>
+                    Abdul Qadeer
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Degree Program
+                </td>
+
+                <td>
+                    Civil Engineering
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    University
+                </td>
+
+                <td>
+                    UET Peshawar
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    CGPA
+                </td>
+
+                <td>
+                    3.20
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Status
+                </td>
+
+                <td class="status">
+                    Graduated
+                </td>
+
+            </tr>
+
+
+        </table>
+
+
+        <!-- =================================================
+             VERIFICATION MESSAGE
+        ================================================== -->
+
+        <div id="verificationMessage"
+             class="verification-message verified">
+
+            ✓ Academic record displayed
+
+        </div>
+
+
+        <!-- =================================================
+             QR CODE
+        ================================================== -->
+
+        <div class="qr-section">
+
+            <h3>
+                Verification QR Code
+            </h3>
+
+            <p>
+                Scan this QR code to open this academic
+                verification page.
+            </p>
+
+
+            <div class="qr-box">
+
+                <div id="qrcode"></div>
+
+            </div>
+
+
+            <div id="qrUrl"
+                 class="qr-url">
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ACADEMIC INFORMATION
+        ================================================== -->
+
+        <div class="office">
+
+            <strong>
+                Academic Record
+            </strong>
+
+            <br>
+
+            University of Engineering &amp; Technology,
+
+            <br>
+
+            Peshawar, Pakistan
+
+            <br>
+
+            Department of Civil Engineering
+
+        </div>
+
+
+        <!-- =================================================
+             DATE
+        ================================================== -->
+
+        <div class="date">
+
+            Date: 02/09/2026
+
+            <br>
+
+            This is a personal online academic record.
+            
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <div class="footer">
+
+        Personal academic verification page.
+
+        <br>
+
+        Not an official UET verification portal.
+
+    </div>
+
+
+    <!-- =================================================
+         BOTTOM BORDER
+    ================================================== -->
+
+    <div class="bottom-border"></div>
+
 
 </div>
+
+
+
+<script>
+
+/* =====================================================
+   STUDENT INFORMATION
+===================================================== */
+
+const student = {
+
+    registration: "22JZCIV0571",
+
+    name: "Abdul Qadeer",
+
+    degree: "Civil Engineering",
+
+    university: "UET Peshawar",
+
+    cgpa: "3.20",
+
+    status: "Graduated"
+
+};
+
+
+/* =====================================================
+   CREATE AUTOMATIC VERIFICATION URL
+===================================================== */
+
+/*
+   WHEN THE WEBSITE IS ONLINE:
+
+   Example:
+
+   https://yourusername.github.io/transcript-verification/
+
+   The QR code automatically becomes:
+
+   https://yourusername.github.io/transcript-verification/?reg=22JZCIV0571
+
+*/
+
+
+function getVerificationURL() {
+
+    let baseURL;
+
+
+    /*
+       If website is running online
+    */
+
+    if (
+        window.location.protocol === "http:" ||
+        window.location.protocol === "https:"
+    ) {
+
+        baseURL =
+            window.location.origin +
+            window.location.pathname;
+
+    }
+
+
+    /*
+       If opened directly from computer,
+       use this temporary GitHub Pages address.
+
+       CHANGE YOURUSERNAME later.
+    */
+
+    else {
+
+        baseURL =
+            "const verificationURL =
+"https://engrqadeertk9057-netizen.github.io/transcript-verification/?reg=22JZCIV0571";
+
+    }
+
+
+    return (
+        baseURL +
+        "?reg=" +
+        encodeURIComponent(student.registration)
+    );
+
+}
+
+
+/* =====================================================
+   CREATE QR CODE
+===================================================== */
+
+function createQR() {
+
+    const qrContainer =
+        document.getElementById("qrcode");
+
+
+    qrContainer.innerHTML = "";
+
+
+    const verificationURL =
+        getVerificationURL();
+
+
+    /*
+       Check QR library
+    */
+
+    if (typeof QRCode === "undefined") {
+
+        qrContainer.innerHTML =
+            "<span style='color:red;font-size:10px;'>QR library not loaded</span>";
+
+        return;
+
+    }
+
+
+    /*
+       Generate QR
+    */
+
+    new QRCode(
+
+        qrContainer,
+
+        {
+
+            text: verificationURL,
+
+            width: 160,
+
+            height: 160,
+
+            colorDark: "#000000",
+
+            colorLight: "#ffffff",
+
+            correctLevel: QRCode.CorrectLevel.H
+
+        }
+
+    );
+
+
+    /*
+       Display URL underneath QR
+    */
+
+    document.getElementById("qrUrl").textContent =
+        verificationURL;
+
+}
+
+
+/* =====================================================
+   CHECK REGISTRATION FROM QR URL
+===================================================== */
+
+function verifyFromURL() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const registration =
+        params.get("reg");
+
+
+    /*
+       If QR was scanned and registration exists
+    */
+
+    if (registration) {
+
+        if (
+            registration.toUpperCase() ===
+            student.registration
+        ) {
+
+            document.getElementById(
+                "verificationMessage"
+            ).innerHTML =
+                "✓ Academic record verified for registration " +
+                student.registration;
+
+        }
+
+        else {
+
+            document.getElementById(
+                "verificationMessage"
+            ).innerHTML =
+                "✗ Academic record not found.";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   START WEBSITE
+===================================================== */
+
+window.addEventListener(
+    "load",
+    function() {
+
+        createQR();
+
+        verifyFromURL();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
